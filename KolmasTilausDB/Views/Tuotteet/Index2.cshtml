@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index2";
+}
+<div class="container-fluid">
+    <!-- Otsikot -->
+    <h2>Tuotteet</h2>
+    <p></p>
+
+        @Html.ActionLink("Lisää uusi", "Create", new { @class = "btn btn-primary btn-large" })
+
+        <div class="row">
+        <!-- Tuotekortit -->
+        @foreach (KolmasTilausDB.Models.Tuotteet tuote in Model)
+        {
+            <div class="col-lg-3">
+                <div class="card mb-3">
+                    <h3 class="card-header">Tuotteet</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">@tuote.Nimi</h5>
+                    </div>
+                    <img style="height: 30%; width: 30%; display: block;" src="@tuote.ImageLink" alta="@tuote.ImageLink">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">TuoteID: @tuote.TuoteID</li>
+                        <li class="list-group-item">Hinta: @tuote.Ahinta</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Lisää ostoskoriin</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        2 days ago
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+</div>

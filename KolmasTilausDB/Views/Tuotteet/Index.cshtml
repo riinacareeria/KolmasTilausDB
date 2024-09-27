@@ -1,0 +1,42 @@
+﻿<!-- Alustus -->
+@model IEnumerable<KolmasTilausDB.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Otsikot -->
+<h2>Tuotteet</h2>
+<p></p>
+<h5>Tuotteita @Model.Count() kappaletta</h5>
+
+<!-- Taulukko -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TuoteID)</th>
+            <th>@Html.DisplayNameFor(model => model.Nimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Ahinta)</th>
+            @*<th>@Html.DisplayNameFor(model => model.Kuva)</th>*@
+        </tr>
+    </thead>
+
+    @foreach (KolmasTilausDB.Models.Tuotteet tuote in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => tuote.TuoteID)</td>
+                <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
+                <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
+                @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@
+                <td>
+                    @Html.ActionLink("Muokkaa", "Edit", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })
+                    @*@Html.ActionLink("Lisätietoja", "Details", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
+                    @Html.ActionLink("Poista", "Delete", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })
+                </td>
+        </tbody>
+    }
+
+</table>
+
+@Html.ActionLink("Lisää uusi", "Create", new { @class = "btn btn-primary btn-large" })

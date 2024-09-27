@@ -1,0 +1,55 @@
+﻿<!-- Alustus -->
+@model IEnumerable<KolmasTilausDB.Models.Asiakkaat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Otsikot -->
+<h2>Asiakaslista</h2>
+<p></p>
+<h5>Asiakkaita @Model.Count() kappaletta</h5>
+
+<!-- Taulukko -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AsiakasID)</th>
+            <th>@Html.DisplayNameFor(model => model.Nimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Osoite)</th>
+            <th>@Html.DisplayNameFor(model => model.Postinumero)</th>
+        </tr>
+    </thead>
+
+    @foreach (KolmasTilausDB.Models.Asiakkaat asiakas in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => asiakas.AsiakasID)</td>
+                <td>@Html.DisplayFor(modelItem => asiakas.Nimi)</td>
+                <td>@Html.DisplayFor(modelItem => asiakas.Osoite)</td>
+                <td>@Html.DisplayFor(modelItem => asiakas.Postinumero)</td>
+                <td>
+                    @Html.ActionLink("Muokkaa", "Edit", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })
+                    @*@Html.ActionLink("Lisätietoja", "Details", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })*@
+                    @Html.ActionLink("Poista", "Delete", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })
+                </td>
+        </tbody>
+    }
+
+</table>
+
+@Html.ActionLink("Lisää uusi", "Create", new { @class = "btn btn-primary btn-large" })
+
+<!-- Lajittelu -->
+<script>
+    const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+    const comparer = (idx, asc) => (a, b) => ((v1, v2) => v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2))(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+        const tbody = table.querySelector('tbody');
+        Array.from(tbody.querySelectorAll('tr'))
+            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+            .forEach(tr => tbody.appendChild(tr));
+    })));
+</script>
