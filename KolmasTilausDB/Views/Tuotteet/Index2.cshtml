@@ -6,7 +6,10 @@
     <h2>Tuotteet</h2>
     <p></p>
 
-        @Html.ActionLink("Lisää uusi", "Create", new { @class = "btn btn-primary btn-large" })
+    <!-- Lisää tuote -button -->
+    <a href="@Url.Action("Create", "Tuotteet")" class="btn btn-primary btn-large">Lisää uusi</a>
+    <br />
+    <br />
 
         <div class="row">
         <!-- Tuotekortit -->

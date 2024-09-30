@@ -30,7 +30,7 @@ namespace KolmasTilausDB.Controllers
 
         public ActionResult Map()
         {
-            ViewBag.Message = "Muokkaus: HomeController/Map/ViewBagMessage.";
+            ViewBag.Message = "Yhteystiedot";
 
             return View();
         }
