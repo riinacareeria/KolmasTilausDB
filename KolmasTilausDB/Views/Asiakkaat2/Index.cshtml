@@ -10,6 +10,12 @@
 <p></p>
 <h5>Asiakkaita @Model.Count() kappaletta</h5>
 
+<!-- Lisää asiakas -button -->
+<br />
+<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-large">Lisää uusi</a>
+<br />
+<br />
+
 <!-- Taulukko -->
 <table class="table table-hover">
     <thead>
@@ -38,8 +44,6 @@
     }
 
 </table>
-
-@Html.ActionLink("Lisää uusi", "Create", new { @class = "btn btn-primary btn-large" })
 
 <!-- Lajittelu -->
 <script>

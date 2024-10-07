@@ -129,7 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AsiakkaatController.cs" />
+    <Compile Include="Controllers\Asiakkaat2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TuotteetController.cs" />
     <Compile Include="Global.asax.cs">
@@ -244,16 +244,17 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Map.cshtml" />
-    <Content Include="Views\Asiakkaat\Index.cshtml" />
-    <Content Include="Views\Asiakkaat\Edit.cshtml" />
-    <Content Include="Views\Asiakkaat\Create.cshtml" />
-    <Content Include="Views\Asiakkaat\Delete.cshtml" />
     <Content Include="Views\Tuotteet\Index.cshtml" />
     <Content Include="Views\Tuotteet\Index2.cshtml" />
     <Content Include="Views\Tuotteet\Edit.cshtml" />
     <Content Include="Views\Tuotteet\Create.cshtml" />
     <Content Include="Views\Tuotteet\Delete.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Asiakkaat2\Create.cshtml" />
+    <Content Include="Views\Asiakkaat2\Delete.cshtml" />
+    <Content Include="Views\Asiakkaat2\Details.cshtml" />
+    <Content Include="Views\Asiakkaat2\Edit.cshtml" />
+    <Content Include="Views\Asiakkaat2\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

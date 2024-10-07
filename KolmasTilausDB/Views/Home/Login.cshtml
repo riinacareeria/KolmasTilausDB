@@ -29,12 +29,13 @@
                 @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br />
         <label class="text-danger">
             @Html.DisplayFor(model => model.LoginErrorMessage)
         </label>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Log" class="btn btn-success" />
+                <input type="submit" value="Kirjaudu sisään" class="btn btn-success" />
             </div>
         </div>
     </div>
