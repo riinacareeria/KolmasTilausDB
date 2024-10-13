@@ -8,7 +8,6 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dl class="dl-horizontal">
             <dt>@Html.DisplayNameFor(model => model.Nimi)</dt>
 
             <dd>@Html.DisplayFor(model => model.Nimi)</dd>
@@ -21,15 +20,13 @@
 
             <dd>@Html.DisplayFor(model => model.Postitoimipaikat.Postitoimipaikka)</dd>
 
-        </dl>
-
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
 <div class="form-actions no-color">
-    <input type="submit" value="Poista" class="btn btn-primary btn-medium" />
+    <input type="submit" value="Poista" class="btn btn-primary btn-default" />
     @Html.ActionLink("Edellinen", "Index", null, new { @class = "btn btn-primary btn-medium" })
 
 </div>

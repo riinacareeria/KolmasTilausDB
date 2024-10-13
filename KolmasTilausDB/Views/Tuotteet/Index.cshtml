@@ -35,12 +35,13 @@
                 <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
                 <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
                 @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@
-                <td>
-                    @Html.ActionLink("Muokkaa", "Edit", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })
-                    @*@Html.ActionLink("Lisätietoja", "Details", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
-                    @Html.ActionLink("Poista", "Delete", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })
-                </td>
+            <td>
+                @Html.ActionLink("Muokkaa", "Edit", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-default" })
+                <a href="https://asp.net" class="btn btn-primary btn-sm"><img src="~/Icons/pencil-square.svg" alt="Muokkaa" width="20" height="20" fill=" "currentColor""title="Muokkaa"></a>
+                @*@Html.ActionLink("Lisätietoja", "Details", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
+                @Html.ActionLink("Poista", "Delete", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })
+            </td>
         </tbody>
     }
-
+    
 </table>

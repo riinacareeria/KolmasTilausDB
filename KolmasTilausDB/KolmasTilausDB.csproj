@@ -138,6 +138,9 @@
     <Compile Include="Models\Asiakkaat.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\database_firewall_rules.cs">
+      <DependentUpon>TilausDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Henkilot.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
@@ -195,6 +198,18 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\arrow-left-circle.svg" />
+    <Content Include="Icons\caret-left-square.svg" />
+    <Content Include="Icons\floppy.svg" />
+    <Content Include="Icons\house-lock.svg" />
+    <Content Include="Icons\house-up.svg" />
+    <Content Include="Icons\house-x.svg" />
+    <Content Include="Icons\indent.svg" />
+    <Content Include="Icons\key.svg" />
+    <Content Include="Icons\pencil-square.svg" />
+    <Content Include="Icons\pencil.svg" />
+    <Content Include="Icons\trash3.svg" />
+    <Content Include="Icons\x-square.svg" />
     <Content Include="Models\TilausDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TilausDBModel.edmx</DependentUpon>
@@ -218,6 +233,7 @@
     <Content Include="Models\TilausDBModel.edmx.diagram">
       <DependentUpon>TilausDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\riinantilausdb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
