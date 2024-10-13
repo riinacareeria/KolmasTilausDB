@@ -12,7 +12,10 @@
 
 <!-- Lisää asiakas -button -->
 <br />
-<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-large">Lisää uusi</a>
+<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-sm">Lisää uusi asiakas 
+    <img src="~/Icons/person-add.svg" alt="Poista" width="25" height="25" title="Poista">
+</a>
+@*<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-large">Lisää uusi</a>*@
 <br />
 <br />
 
@@ -36,9 +39,18 @@
                 <td>@Html.DisplayFor(modelItem => asiakas.Osoite)</td>
                 <td>@Html.DisplayFor(modelItem => asiakas.Postinumero)</td>
                 <td>
-                    @Html.ActionLink("Muokkaa", "Edit", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })
+                    @*@Html.ActionLink("Muokkaa", "Edit", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })*@
+                    <a href="@Url.Action("Edit", "Asiakkaat2", new { id = asiakas.AsiakasID })" class="btn btn-primary btn-sm">
+                        <img src="~/Icons/pencil-square.svg" alt="Poista" width="20" height="20" title="Poista">
+                    </a>
+
                     @*@Html.ActionLink("Lisätietoja", "Details", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })*@
-                    @Html.ActionLink("Poista", "Delete", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })
+
+                    @*@Html.ActionLink("Poista", "Delete", new { id = asiakas.AsiakasID }, new { @class = "btn btn-primary btn-large" })*@
+                    <a href="@Url.Action("Delete", "Asiakkaat2", new { id = asiakas.AsiakasID })" class="btn btn-primary btn-sm">
+                        <img src="~/Icons/trash3.svg" alt="Poista" width="20" height="20" title="Poista">
+                    </a>
+
                 </td>
         </tbody>
     }

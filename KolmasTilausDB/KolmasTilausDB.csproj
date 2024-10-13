@@ -199,6 +199,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Icons\arrow-left-circle.svg" />
+    <Content Include="Icons\bag-plus.svg" />
     <Content Include="Icons\caret-left-square.svg" />
     <Content Include="Icons\floppy.svg" />
     <Content Include="Icons\house-lock.svg" />
@@ -208,6 +209,7 @@
     <Content Include="Icons\key.svg" />
     <Content Include="Icons\pencil-square.svg" />
     <Content Include="Icons\pencil.svg" />
+    <Content Include="Icons\person-add.svg" />
     <Content Include="Icons\trash3.svg" />
     <Content Include="Icons\x-square.svg" />
     <Content Include="Models\TilausDBModel.Context.tt">
