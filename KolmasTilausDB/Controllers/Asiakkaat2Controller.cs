@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using KolmasTilausDB.Models;
+using PagedList;
 
 namespace KolmasTilausDB.Controllers
 {
@@ -14,8 +15,7 @@ namespace KolmasTilausDB.Controllers
     {
         private TilausDBEntities3 db = new TilausDBEntities3();
 
-        // GET: Asiakkaat2
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter2, string searchString2, int? page, int? pagesize)
         {
             if (Session["UserName"] == null) // Toimii vain kirjautuneena
             {
@@ -23,10 +23,89 @@ namespace KolmasTilausDB.Controllers
             }
             else
             {
-                var asiakkaat = db.Asiakkaat.Include(a => a.Postitoimipaikat);
-                return View(asiakkaat.ToList());
+                //Lajittelu:
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.AsiakasNimiSortParm = String.IsNullOrEmpty(sortOrder) ? "asiakasnimi_desc" : "";
+                //POISTA?ViewBag.TuoteHintaSortParm = sortOrder == "Ahinta" ? "Ahinta_desc" : "Ahinta";
+
+                //Hakusuodatus muistiin:
+                if (searchString2 != null)
+                {
+                    page = 1;
+                }
+
+                else
+                {
+                    searchString2 = currentFilter2;
+                }
+
+                ViewBag.CurrentFilter1 = searchString2;
+
+                //Olion luonti:
+                var asiakaslista = from a in db.Asiakkaat select a;
+
+                //Hakusuodatus & lajittelu:
+                if (!String.IsNullOrEmpty(searchString2))
+                {
+                    switch (sortOrder)
+                    {
+                        case "asiakasnimi_desc":
+                            asiakaslista = asiakaslista.Where(a => a.Nimi.Contains(searchString2)).OrderByDescending(a => a.Nimi);
+                            break;
+                        //POISTA?case "Ahinta":
+                        //    tuotelista = tuotelista.Where(t => t.Nimi.Contains(searchString1)).OrderBy(t => t.Ahinta);
+                        //    break;
+                        //case "Ahinta_desc":
+                        //    tuotelista = tuotelista.Where(t => t.Nimi.Contains(searchString1)).OrderByDescending(t => t.Ahinta);
+                        //    break;
+                        default:
+                            asiakaslista = asiakaslista.Where(a => a.Nimi.Contains(searchString2)).OrderBy(a => a.Nimi);
+                            break;
+                    }
+                }
+
+                //Lajittelu ilman hakusuodatusta
+                else
+                {
+                    switch (sortOrder)
+                    {
+                        case "asiakasnimi_desc":
+                            asiakaslista = asiakaslista.OrderByDescending(a => a.Nimi);
+                            break;
+                        //POISTA?case "Ahinta":
+                        //    tuotelista = tuotelista.OrderBy(t => t.Ahinta);
+                        //    break;
+                        //case "Ahinta_desc":
+                        //    tuotelista = tuotelista.OrderByDescending(t => t.Ahinta);
+                        //    break;
+                        default:
+                            asiakaslista = asiakaslista.OrderBy(a => a.Nimi);
+                            break;
+                    }
+                }
+
+                // Sivukoon ja sivunumeron arvojen asetus
+                int pageSize = (pagesize ?? 5); // Palauttaa sivukoon, jos null  -> 5 riviä/sivu
+                int pageNumber = (page ?? 1); // Palauttaa sivunumeron, jos null -> 1
+                return View(asiakaslista.ToPagedList(pageNumber, pageSize));
             }
         }
+        #region Vanha versio
+        //public ActionResult Index()
+        //{
+        //    if (Session["UserName"] == null) // Toimii vain kirjautuneena
+        //    {
+        //        return RedirectToAction("login", "home");
+        //    }
+        //    else
+        //    {
+        //        var asiakkaat = db.Asiakkaat.Include(a => a.Postitoimipaikat);
+
+
+        //        return View(asiakkaat.ToList());
+        //    }
+        //}
+        #endregion
 
         // GET: Asiakkaat2/Details/5
         public ActionResult Details(int? id)

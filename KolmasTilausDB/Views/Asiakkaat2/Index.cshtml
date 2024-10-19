@@ -1,6 +1,8 @@
 ﻿<!-- Alustus -->
-@model IEnumerable<KolmasTilausDB.Models.Asiakkaat>
-
+<!-- Alustus -->
+@model PagedList.IPagedList<KolmasTilausDB.Models.Asiakkaat>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
 }
@@ -12,25 +14,45 @@
 
 <!-- Lisää asiakas -button -->
 <br />
-<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-sm">Lisää uusi asiakas 
+<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-sm">
+    Lisää uusi asiakas
     <img src="~/Icons/person-add.svg" alt="Poista" width="25" height="25" title="Poista">
 </a>
 @*<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-large">Lisää uusi</a>*@
 <br />
 <br />
 
+@*Hakutoiminto:*@
+@using (Html.BeginForm("Index", "Asiakkaat2", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Haku:")</p>
+        <p class="px-1">@Html.TextBox("SearchString2", ViewBag.currentFilter2 as string, new { @class = "form-control" })</p>
+        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+    </div>
+}
+
 <!-- Taulukko -->
-<table class="table table-hover">
+<!--<table class="table table-hover">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.AsiakasID)</th>
-            <th>@Html.DisplayNameFor(model => model.Nimi)</th>
-            <th>@Html.DisplayNameFor(model => model.Osoite)</th>
-            <th>@Html.DisplayNameFor(model => model.Postinumero)</th>
+            <th>(a)Html.DisplayNameFor(model => model.AsiakasID)</th>
+            <th>Html.DisplayNameFor(model => model.Nimi)</th>
+            <th>Html.DisplayNameFor(model => model.Osoite)</th>
+            <th>Html.DisplayNameFor(model => model.Postinumero)</th>
         </tr>
-    </thead>
+    </thead>-->
 
-    @foreach (KolmasTilausDB.Models.Asiakkaat asiakas in Model)
+@*Lajittelu:*@
+<table class="table">
+    <tr>
+        <th>AsiakasID</th>
+        <th>@Html.ActionLink("Asiakkaan nimi", "Index", new { sortOrder = ViewBag.AsiakasNimiSortParm, currentFilter2 = ViewBag.currentFilter2 })</th>
+        <th>Osoite</th>
+        <th>Postinumero</th>
+    </tr>
+
+    @foreach (var asiakas in Model)
     {
         <tbody>
             <tr>
@@ -57,8 +79,18 @@
 
 </table>
 
-<!-- Lajittelu -->
-<script>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter2
+= ViewBag.currentFilter2,
+    currentAsiakasCategory = ViewBag.currentAsiakasCategory
+}))
+
+<!-- VANHA Lajittelu -->
+<!--<script>
     const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
     const comparer = (idx, asc) => (a, b) => ((v1, v2) => v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2))(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
     document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
@@ -68,4 +100,4 @@
             .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
             .forEach(tr => tbody.appendChild(tr));
     })));
-</script>
+</script>-->
