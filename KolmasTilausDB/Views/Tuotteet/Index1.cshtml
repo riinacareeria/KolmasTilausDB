@@ -1,0 +1,56 @@
+﻿<!-- Alustus -->
+@model IEnumerable<KolmasTilausDB.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Otsikot -->
+<h2>Tuotteet</h2>
+<p></p>
+<h5>Tuotteita @Model.Count() kappaletta</h5>
+
+<!-- Lisää tuote -button -->
+<br />
+<a href="@Url.Action("Create", "Tuotteet")" class="btn btn-primary btn-sm">
+    Lisää uusi tuote  
+    <img src="~/Icons/bag-plus.svg" alt="Poista" width="20" height="20" title="Poista">
+</a>
+@*<a href="@Url.Action("Create", "Tuotteet")" class="btn btn-primary btn-large">Lisää uusi</a>*@
+<br />
+<br />
+
+<!-- Taulukko -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TuoteID)</th>
+            <th>@Html.DisplayNameFor(model => model.Nimi)</th>
+            <th>@Html.DisplayNameFor(model => model.Ahinta)</th>
+            @*<th>@Html.DisplayNameFor(model => model.Kuva)</th>*@
+        </tr>
+    </thead>
+
+    @foreach (KolmasTilausDB.Models.Tuotteet tuote in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => tuote.TuoteID)</td>
+                <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
+                <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
+                @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@
+            <td>
+                @*@Html.ActionLink("Muokkaa", "Edit", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-default" })*@
+                <a href="@Url.Action("Edit", "Tuotteet", new { id = tuote.TuoteID })" class="btn btn-primary btn-sm">
+                    <img src="~/Icons/pencil-square.svg" alt="Poista" width="20" height="20" title="Poista">
+                </a>
+                @*@Html.ActionLink("Lisätietoja", "Details", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
+                @*@Html.ActionLink("Poista", "Delete", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
+                <a href="@Url.Action("Delete", "Tuotteet", new { id = tuote.TuoteID })" class="btn btn-primary btn-sm">
+                    <img src="~/Icons/trash3.svg" alt="Poista" width="20" height="20" title="Poista">
+                </a>
+            </td>
+        </tbody>
+    }
+    
+</table>

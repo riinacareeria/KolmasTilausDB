@@ -1,5 +1,7 @@
 ﻿<!-- Alustus -->
-@model IEnumerable<KolmasTilausDB.Models.Tuotteet>
+@model PagedList.IPagedList<KolmasTilausDB.Models.Tuotteet>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -12,45 +14,59 @@
 
 <!-- Lisää tuote -button -->
 <br />
-<a href="@Url.Action("Create", "Asiakkaat2")" class="btn btn-primary btn-sm">
-    Lisää uusi tuote  
+<a href="@Url.Action("Create", "Tuotteet")" class="btn btn-primary btn-sm">
+    Lisää uusi tuote
     <img src="~/Icons/bag-plus.svg" alt="Poista" width="20" height="20" title="Poista">
 </a>
-@*<a href="@Url.Action("Create", "Tuotteet")" class="btn btn-primary btn-large">Lisää uusi</a>*@
 <br />
 <br />
 
-<!-- Taulukko -->
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.TuoteID)</th>
-            <th>@Html.DisplayNameFor(model => model.Nimi)</th>
-            <th>@Html.DisplayNameFor(model => model.Ahinta)</th>
-            @*<th>@Html.DisplayNameFor(model => model.Kuva)</th>*@
-        </tr>
-    </thead>
+@*Hakutoiminto:*@
+@using (Html.BeginForm("Index", "Tuotteet", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Haku:")</p>
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> <!-- Otsikko -->
+        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+    </div>
+}
 
-    @foreach (KolmasTilausDB.Models.Tuotteet tuote in Model)
+@*Lajittelu:*@
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.TuoteNimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Tuotteen hinta", "Index", new { sortOrder = ViewBag.TuoteHintaSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        @*<th>Kuva</th>*@
+        <th>Kuvalinkki</th>
+        <th></th>
+    </tr>
+
+    @foreach (var tuote in Model)
     {
-        <tbody>
-            <tr>
-                <td>@Html.DisplayFor(modelItem => tuote.TuoteID)</td>
-                <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
-                <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
-                @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@
+        <tr>
+            <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
+            <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
+            @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@
+            <td>@Html.DisplayFor(modelItem => tuote.ImageLink)</td>
             <td>
-                @*@Html.ActionLink("Muokkaa", "Edit", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-default" })*@
                 <a href="@Url.Action("Edit", "Tuotteet", new { id = tuote.TuoteID })" class="btn btn-primary btn-sm">
                     <img src="~/Icons/pencil-square.svg" alt="Poista" width="20" height="20" title="Poista">
                 </a>
-                @*@Html.ActionLink("Lisätietoja", "Details", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
-                @*@Html.ActionLink("Poista", "Delete", new { id = tuote.TuoteID }, new { @class = "btn btn-primary btn-large" })*@
                 <a href="@Url.Action("Delete", "Tuotteet", new { id = tuote.TuoteID })" class="btn btn-primary btn-sm">
                     <img src="~/Icons/trash3.svg" alt="Poista" width="20" height="20" title="Poista">
                 </a>
             </td>
-        </tbody>
+        </tr>
     }
-    
+
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter1
+= ViewBag.currentFilter1,
+    currentProductCategory = ViewBag.currentProductCategory
+}))

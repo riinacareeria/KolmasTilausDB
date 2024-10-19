@@ -9,6 +9,30 @@
     </section>
 
     <section>
-        <p>Sivustolta löytyy tietoa yrityksestä sekä pystyy tekemään tuotetilauksia. Kirjautuneille käyttäjille lisäksi asiakas- ja tuotetietojen muokkaus.</p>
+        <br />
+        <p>Sivustolta löytyy tietoa yrityksestä sekä pystyy tekemään tuotetilauksia. </p>
+        <p>Kirjautuneille käyttäjille lisäksi asiakas- ja tuotetietojen muokkaus.</p>
+        <br />
     </section>
+
+    @*Modal -tyyppisen ikkunan avauspainike*@
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Kirjaudu sisään</button>
+    @*Modal -tyyppisen ikkunan koodiesimerkki*@
+    <div class="modal" id="LoginRuutu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Sisäänkirjautuminen</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Tähän tulee sisäänkirjautumistoiminnot seuraavaksi</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Kirjaudu</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-db-dismiss="modal">Peruuta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>

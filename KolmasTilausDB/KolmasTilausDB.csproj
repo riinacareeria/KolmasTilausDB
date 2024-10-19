@@ -53,6 +53,12 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -195,6 +201,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\bootstraplux.css" />
     <Content Include="Content\bootstraplux.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -262,7 +269,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Map.cshtml" />
-    <Content Include="Views\Tuotteet\Index.cshtml" />
+    <Content Include="Views\Tuotteet\Index1.cshtml" />
     <Content Include="Views\Tuotteet\Index2.cshtml" />
     <Content Include="Views\Tuotteet\Edit.cshtml" />
     <Content Include="Views\Tuotteet\Create.cshtml" />
@@ -273,6 +280,7 @@
     <Content Include="Views\Asiakkaat2\Details.cshtml" />
     <Content Include="Views\Asiakkaat2\Edit.cshtml" />
     <Content Include="Views\Asiakkaat2\Index.cshtml" />
+    <Content Include="Views\Tuotteet\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
