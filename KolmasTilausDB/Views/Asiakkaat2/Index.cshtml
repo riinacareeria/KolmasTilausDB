@@ -7,6 +7,16 @@
     ViewBag.Title = "Index";
 }
 
+ <!-- JQuery -->
+@section scripts {
+    <script type="text/javascript">
+        $("#yksittainenPostitoimipaikka").on("change", function () {
+            var selValue = $("#yksittainenPostitoimipaikka").val();
+            document.getElementById("postitoimipaikkaX").value = selValue;
+        });
+    </script>
+}
+
 <!-- Otsikot -->
 <h2>Asiakaslista</h2>
 <p></p>
@@ -26,8 +36,13 @@
 @using (Html.BeginForm("Index", "Asiakkaat2", FormMethod.Get))
 {
     <div class="input-group">
+        <!-- Haku -->
         <p class="px-1">@Html.Label("Haku:")</p>
         <p class="px-1">@Html.TextBox("SearchString2", ViewBag.currentFilter2 as string, new { @class = "form-control" })</p>
+        <!-- Pudotusvalikko -->
+        <p class="px-1">@Html.Label("Hae postitoimipaikalla:")</p>
+        <p class="px-1">@Html.Hidden("postitoimipaikkaX", ViewBag.currentPostitoimipaikka as string, new { @id = "postitoimipaikkaX", @class = "form-control" }) </p>
+        <p class="px-1">@Html.DropDownList("Postinumero", null, htmlAttributes: new { @id = "yksittainenPostitoimipaikka", @class = "form-control" })</p>
         <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
     </div>
 }
@@ -42,12 +57,11 @@
             <th>Html.DisplayNameFor(model => model.Postinumero)</th>
         </tr>
     </thead>-->
-
 @*Lajittelu:*@
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>AsiakasID</th>
-        <th>@Html.ActionLink("Asiakkaan nimi", "Index", new { sortOrder = ViewBag.AsiakasNimiSortParm, currentFilter2 = ViewBag.currentFilter2 })</th>
+        <th>@Html.ActionLink("Asiakkaan nimi", "Index", new { sortOrder = ViewBag.AsiakasNimiSortParm, currentFilter2 = ViewBag.currentFilter2, currentProductCategoryMUUTA = ViewBag.currentProductCategoryMUUTA })</th>
         <th>Osoite</th>
         <th>Postinumero</th>
     </tr>
@@ -83,11 +97,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 @Html.PagedListPager(Model, page => Url.Action("Index", new
 {
     page,
-    sortOrder = ViewBag.CurrentSort,
-    currentFilter2
-= ViewBag.currentFilter2,
-    currentAsiakasCategory = ViewBag.currentAsiakasCategory
-}))
+    sortOrder = ViewBag.CurrentSort, currentFilter2 = ViewBag.currentFilter2, currentAsiakasCategory = ViewBag.currentAsiakasCategory,
+    currentPostitoimipaikka = ViewBag.currentPostitoimipaikka }))
 
 <!-- VANHA Lajittelu -->
 <!--<script>

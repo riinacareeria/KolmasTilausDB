@@ -15,7 +15,7 @@ namespace KolmasTilausDB.Controllers
     {
         private TilausDBEntities3 db = new TilausDBEntities3();
 
-        public ActionResult Index(string sortOrder, string currentFilter2, string searchString2, int? page, int? pagesize)
+        public ActionResult Index(string sortOrder, string currentFilter2, string searchString2, string postitoimipaikkaX, string currentPostitoimipaikka,  int? page, int? pagesize)
         {
             if (Session["UserName"] == null) // Toimii vain kirjautuneena
             {
@@ -26,7 +26,6 @@ namespace KolmasTilausDB.Controllers
                 //Lajittelu:
                 ViewBag.CurrentSort = sortOrder;
                 ViewBag.AsiakasNimiSortParm = String.IsNullOrEmpty(sortOrder) ? "asiakasnimi_desc" : "";
-                //POISTA?ViewBag.TuoteHintaSortParm = sortOrder == "Ahinta" ? "Ahinta_desc" : "Ahinta";
 
                 //Hakusuodatus muistiin:
                 if (searchString2 != null)
@@ -41,10 +40,41 @@ namespace KolmasTilausDB.Controllers
 
                 ViewBag.CurrentFilter1 = searchString2;
 
-                //Olion luonti:
+                //Pudotusvalikko muistiin:
+                if ((postitoimipaikkaX != null) && (postitoimipaikkaX != "0"))
+                {
+                    page = 1;
+                }
+
+                else
+                {
+                    postitoimipaikkaX = currentPostitoimipaikka;
+                }
+
+                ViewBag.currentPostitoimipaikka = postitoimipaikkaX;
+
+
+                //Olioiden luonti:
                 var asiakaslista = from a in db.Asiakkaat select a;
 
-                //Hakusuodatus & lajittelu:
+                var postitmpList = from pt in db.Postitoimipaikat select pt;
+
+                //Asiakashaku tekstikentällä
+
+                if (!String.IsNullOrEmpty(searchString2))
+                {
+                    asiakaslista = asiakaslista.Where(a => a.Nimi.Contains(searchString2));
+                }
+
+                //Asiakashaku postitoimipaikan mukaan (pudotusvalikko)
+
+                if (!String.IsNullOrEmpty(postitoimipaikkaX) && (postitoimipaikkaX !=""))
+                {
+                    string para = postitoimipaikkaX;
+                    asiakaslista = asiakaslista.Where(pt => pt.Postinumero == para);
+                }
+
+                //Jos tekstihaku & lajittelu käytössä:
                 if (!String.IsNullOrEmpty(searchString2))
                 {
                     switch (sortOrder)
@@ -52,19 +82,28 @@ namespace KolmasTilausDB.Controllers
                         case "asiakasnimi_desc":
                             asiakaslista = asiakaslista.Where(a => a.Nimi.Contains(searchString2)).OrderByDescending(a => a.Nimi);
                             break;
-                        //POISTA?case "Ahinta":
-                        //    tuotelista = tuotelista.Where(t => t.Nimi.Contains(searchString1)).OrderBy(t => t.Ahinta);
-                        //    break;
-                        //case "Ahinta_desc":
-                        //    tuotelista = tuotelista.Where(t => t.Nimi.Contains(searchString1)).OrderByDescending(t => t.Ahinta);
-                        //    break;
                         default:
                             asiakaslista = asiakaslista.Where(a => a.Nimi.Contains(searchString2)).OrderBy(a => a.Nimi);
                             break;
                     }
                 }
+                
+                //Muussa tapauksessa pudotusvalikko & lajittelu käytössä
+                else if(!String.IsNullOrEmpty(postitoimipaikkaX) && (postitoimipaikkaX != ""))
+                {
+                    string para = postitoimipaikkaX;
+                    switch (sortOrder)
+                    {
+                        case "asiakasnimi_desc":
+                            asiakaslista = asiakaslista.Where(pt => pt.Postinumero == para).OrderByDescending(pt => pt.Postinumero);
+                            break;
+                        default:
+                            asiakaslista = asiakaslista.Where(pt => pt.Postinumero == para).OrderBy(pt => pt.Postinumero);
+                            break;
+                    }
+                }
 
-                //Lajittelu ilman hakusuodatusta
+                //Tai jos niistä ei kumpaakaan, niin sitten lajittelu ilman hakusuodatusta
                 else
                 {
                     switch (sortOrder)
@@ -72,17 +111,31 @@ namespace KolmasTilausDB.Controllers
                         case "asiakasnimi_desc":
                             asiakaslista = asiakaslista.OrderByDescending(a => a.Nimi);
                             break;
-                        //POISTA?case "Ahinta":
-                        //    tuotelista = tuotelista.OrderBy(t => t.Ahinta);
-                        //    break;
-                        //case "Ahinta_desc":
-                        //    tuotelista = tuotelista.OrderByDescending(t => t.Ahinta);
-                        //    break;
                         default:
                             asiakaslista = asiakaslista.OrderBy(a => a.Nimi);
                             break;
                     }
                 }
+
+                //Haku pudotusvalikolla:
+                List<Postitoimipaikat> lstPosTmp = new List<Postitoimipaikat>();
+
+                Postitoimipaikat tyhjaPosTmp = new Postitoimipaikat();
+                tyhjaPosTmp.Postinumero = "0";
+                tyhjaPosTmp.Postitoimipaikka = "";
+                tyhjaPosTmp.PosNroPosTmp = "";
+                lstPosTmp.Add(tyhjaPosTmp);
+
+                foreach (Postitoimipaikat paikka in postitmpList)
+                {
+                    Postitoimipaikat yksiPaikka = new Postitoimipaikat();
+                    yksiPaikka.Postinumero = paikka.Postinumero;
+                    yksiPaikka.Postitoimipaikka = paikka.Postitoimipaikka;
+                    yksiPaikka.PosNroPosTmp = paikka.Postinumero.ToString() + " - " + paikka.Postitoimipaikka; //Pudotusvalikossa näkyvä
+                    lstPosTmp.Add(yksiPaikka);
+                }
+                ViewBag.Postinumero = new SelectList(lstPosTmp, "Postinumero", "Postitoimipaikka", postitoimipaikkaX);
+
 
                 // Sivukoon ja sivunumeron arvojen asetus
                 int pageSize = (pagesize ?? 5); // Palauttaa sivukoon, jos null  -> 5 riviä/sivu

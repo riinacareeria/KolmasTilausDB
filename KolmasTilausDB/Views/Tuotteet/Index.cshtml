@@ -32,10 +32,11 @@
 }
 
 @*Lajittelu:*@
-<table class="table">
+<table class="table table-hover">
     <tr>
-        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.TuoteNimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Tuotteen hinta", "Index", new { sortOrder = ViewBag.TuoteHintaSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>TuoteID</th>
+        <th>@Html.ActionLink("Tuotenimi", "Index", new { sortOrder = ViewBag.TuoteNimiSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Hinta", "Index", new { sortOrder = ViewBag.TuoteHintaSortParm, currentFilter1 = ViewBag.currentFilter1 })</th>
         @*<th>Kuva</th>*@
         <th>Kuvalinkki</th>
         <th></th>
@@ -44,6 +45,7 @@
     @foreach (var tuote in Model)
     {
         <tr>
+            <td>@Html.DisplayFor(modelItem => tuote.TuoteID)</td>
             <td>@Html.DisplayFor(modelItem => tuote.Nimi)</td>
             <td>@Html.DisplayFor(modelItem => tuote.Ahinta)</td>
             @*<td>@Html.DisplayFor(modelItem => tuote.Kuva)</td>*@

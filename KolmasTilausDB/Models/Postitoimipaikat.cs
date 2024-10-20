@@ -23,7 +23,9 @@ namespace KolmasTilausDB.Models
     
         public string Postinumero { get; set; }
         public string Postitoimipaikka { get; set; }
-    
+
+        public string PosNroPosTmp { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asiakkaat> Asiakkaat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
